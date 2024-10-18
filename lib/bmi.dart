@@ -29,6 +29,8 @@ class _BMIPageState extends State<BMIPage> {
 
   @override
   Widget build(BuildContext context) {
+    final screenSize = MediaQuery.of(context).size;
+    final isLandscape = screenSize.width > screenSize.height;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -38,223 +40,246 @@ class _BMIPageState extends State<BMIPage> {
           ),
           backgroundColor: Colors.blue,
         ),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: <Widget>[
-            Expanded(
-                child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: ComponentWidget(
-                    color: activeColor,
-                    cardChild: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text('Weight', style: kLabelTextStyle),
-                        Text(
-                          weight.toString(),
-                          style: const TextStyle(
-                              fontSize: 50.0,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
+        body: Container(
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: <Widget>[
+              Expanded(
+                flex: isLandscape ? 3 : 7,
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      SizedBox(
+                        child: Row(
                           children: <Widget>[
-                            RoudedIconButton(
-                              icons: Icons.remove,
-                              onPressed: () {
-                                setState(() {
-                                  if (weight > 0) {
-                                    weight--;
-                                  }
-                                });
-                              },
+                            Flexible(
+                              child: ComponentWidget(
+                                color: activeColor,
+                                cardChild: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    Text('Weight', style: kLabelTextStyle),
+                                    Text(
+                                      weight.toString(),
+                                      style: const TextStyle(
+                                          fontSize: 50.0,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        RoudedIconButton(
+                                          icons: Icons.remove,
+                                          onPressed: () {
+                                            setState(() {
+                                              if (weight > 0) {
+                                                weight--;
+                                              }
+                                            });
+                                          },
+                                        ),
+                                        const SizedBox(width: 10.0),
+                                        RoudedIconButton(
+                                          icons: Icons.add,
+                                          onPressed: () {
+                                            setState(() {
+                                              weight++;
+                                            });
+                                          },
+                                        ),
+                                      ],
+                                    )
+                                  ],
+                                ),
+                              ),
                             ),
-                            const SizedBox(width: 10.0),
-                            RoudedIconButton(
-                              icons: Icons.add,
-                              onPressed: () {
-                                setState(() {
-                                  weight++;
-                                });
-                              },
-                            ),
+                            Flexible(
+                                child: ComponentWidget(
+                              color: activeColor,
+                              cardChild: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text('Age', style: kLabelTextStyle),
+                                  Text(
+                                    age.toString(),
+                                    style: const TextStyle(
+                                        fontSize: 50.0,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      RoudedIconButton(
+                                        icons: Icons.remove,
+                                        onPressed: () {
+                                          setState(() {
+                                            if (age > 0) {
+                                              age--;
+                                            }
+                                          });
+                                        },
+                                      ),
+                                      const SizedBox(width: 10.0),
+                                      RoudedIconButton(
+                                        icons: Icons.add,
+                                        onPressed: () {
+                                          setState(() {
+                                            age++;
+                                          });
+                                        },
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ))
                           ],
-                        )
-                      ],
+                        ),
+                      ),
+                      SizedBox(
+                        child: ComponentWidget(
+                          color: activeColor,
+                          cardChild: Center(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Text(
+                                  'HEIGHT',
+                                  style: kLabelTextStyle,
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment.baseline,
+                                  textBaseline: TextBaseline.alphabetic,
+                                  children: <Widget>[
+                                    Text(
+                                      heights.toString(),
+                                      style: const TextStyle(
+                                          fontSize: 50.0,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    Text(
+                                      'cm',
+                                      style: kLabelTextStyle,
+                                    )
+                                  ],
+                                ),
+                                SliderTheme(
+                                  data: SliderTheme.of(context).copyWith(
+                                    trackHeight: 3.0,
+                                    activeTrackColor: Colors.white,
+                                    inactiveTickMarkColor: Colors.blueGrey,
+                                    inactiveTrackColor: Colors.blueGrey,
+                                    thumbShape: const RoundSliderThumbShape(
+                                        enabledThumbRadius: 15.0),
+                                    thumbColor: Colors.blueAccent,
+                                    overlayShape: const RoundSliderOverlayShape(
+                                        overlayRadius: 30.0),
+                                    overlayColor: const Color(0x29EB1555),
+                                  ),
+                                  child: Slider(
+                                    value: heights.toDouble(),
+                                    min: 0.0,
+                                    max: 220.0,
+                                    onChanged: (double value) {
+                                      setState(
+                                        () {
+                                          heights = value.toInt();
+                                        },
+                                      );
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        child: Row(
+                          children: <Widget>[
+                            Flexible(
+                              child: ComponentWidget(
+                                onPressed: () {
+                                  setState(() {
+                                    selectedGender = GenderType.male;
+                                  });
+                                },
+                                color: selectedGender == GenderType.male
+                                    ? activeColor
+                                    : inactiveColor,
+                                cardChild: IconContent(
+                                  label: 'MALE',
+                                  icons: FontAwesomeIcons.mars,
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              child: ComponentWidget(
+                                onPressed: () {
+                                  setState(() {
+                                    selectedGender = GenderType.female;
+                                  });
+                                },
+                                color: selectedGender == GenderType.female
+                                    ? activeColor
+                                    : inactiveColor,
+                                cardChild: IconContent(
+                                  label: 'FEMALE',
+                                  icons: FontAwesomeIcons.venus,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    CalculationBrain calc =
+                        CalculationBrain(height: heights, weight: weight);
+
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ResultPage(
+                                  bmiResult: calc.calculate(),
+                                  resultText: calc.getResult(),
+                                  bmiInterpretation: calc.getInterpretation(),
+                                )));
+                  },
+                  child: Container(
+                    color: Colors.blue,
+                    margin: const EdgeInsets.only(top: 15.0),
+                    width:
+                        double.infinity, // stretch to full width of the screen
+                    height: 80.0,
+                    child: const Center(
+                      child: Text(
+                        'CALCULATE',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 25.0,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
-                Expanded(
-                    child: ComponentWidget(
-                  color: activeColor,
-                  cardChild: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text('Age', style: kLabelTextStyle),
-                      Text(
-                        age.toString(),
-                        style: const TextStyle(
-                            fontSize: 50.0,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          RoudedIconButton(
-                            icons: Icons.remove,
-                            onPressed: () {
-                              setState(() {
-                                if (age > 0) {
-                                  age--;
-                                }
-                              });
-                            },
-                          ),
-                          const SizedBox(width: 10.0),
-                          RoudedIconButton(
-                            icons: Icons.add,
-                            onPressed: () {
-                              setState(() {
-                                age++;
-                              });
-                            },
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ))
-              ],
-            )),
-            Expanded(
-              child: ComponentWidget(
-                color: activeColor,
-                cardChild: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        'HEIGHT',
-                        style: kLabelTextStyle,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.baseline,
-                        textBaseline: TextBaseline.alphabetic,
-                        children: <Widget>[
-                          Text(
-                            heights.toString(),
-                            style: const TextStyle(
-                                fontSize: 50.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            'cm',
-                            style: kLabelTextStyle,
-                          )
-                        ],
-                      ),
-                      SliderTheme(
-                        data: SliderTheme.of(context).copyWith(
-                          trackHeight: 3.0,
-                          activeTrackColor: Colors.white,
-                          inactiveTickMarkColor: Colors.blueGrey,
-                          inactiveTrackColor: Colors.blueGrey,
-                          thumbShape: const RoundSliderThumbShape(
-                              enabledThumbRadius: 15.0),
-                          thumbColor: Colors.blueAccent,
-                          overlayShape: const RoundSliderOverlayShape(
-                              overlayRadius: 30.0),
-                          overlayColor: const Color(0x29EB1555),
-                        ),
-                        child: Slider(
-                          value: heights.toDouble(),
-                          min: 0.0,
-                          max: 220.0,
-                          onChanged: (double value) {
-                            setState(
-                              () {
-                                heights = value.toInt();
-                              },
-                            );
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-                child: Row(children: <Widget>[
-              Expanded(
-                child: ComponentWidget(
-                  onPressed: () {
-                    setState(() {
-                      selectedGender = GenderType.male;
-                    });
-                  },
-                  color: selectedGender == GenderType.male
-                      ? activeColor
-                      : inactiveColor,
-                  cardChild: IconContent(
-                    label: 'MALE',
-                    icons: FontAwesomeIcons.mars,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: ComponentWidget(
-                  onPressed: () {
-                    setState(() {
-                      selectedGender = GenderType.female;
-                    });
-                  },
-                  color: selectedGender == GenderType.female
-                      ? activeColor
-                      : inactiveColor,
-                  cardChild: IconContent(
-                    label: 'FEMALE',
-                    icons: FontAwesomeIcons.venus,
-                  ),
-                ),
               )
-            ])),
-            GestureDetector(
-              onTap: () {
-                CalculationBrain calc =
-                    CalculationBrain(height: heights, weight: weight);
-
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => ResultPage(
-                              bmiResult: calc.calculate(),
-                              resultText: calc.getResult(),
-                              bmiInterpretation: calc.getInterpretation(),
-                            )));
-              },
-              child: Container(
-                color: Colors.blue,
-                margin: const EdgeInsets.only(top: 15.0),
-                width: double.infinity, // stretch to full width of the screen
-                height: 80.0,
-                child: const Center(
-                  child: Text(
-                    'CALCULATE',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25.0,
-                        fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
-            )
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -323,16 +348,22 @@ class ComponentWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        margin: const EdgeInsets.all(15.0),
-        decoration: BoxDecoration(
-          color: color,
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: cardChild,
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        GestureDetector(
+          onTap: onPressed,
+          child: Container(
+            padding: const EdgeInsets.all(20),
+            margin: const EdgeInsets.all(15.0),
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: cardChild,
+          ),
+        )
+      ],
     );
   }
 }
