@@ -30,53 +30,57 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       body: Container(
         color: Colors.white,
-        child: Expanded(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Center(
-                child: Image.asset(
-                  'images/icons8-bmi-100.png',
-                  scale: 0.9,
-                ),
-              ),
-              const Text(
-                'Calculation BMI',
-                style: TextStyle(
-                    fontSize: 25,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-              const SizedBox(height: 10),
-              Container(
-                width: 200,
-                height: 45,
-                child: TextButton(
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: Image.asset(
+                      'images/icons8-bmi-100.png',
+                      scale: 0.9,
                     ),
                   ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const BMIPage(),
-                      ),
-                    );
-                  },
-                  child: const Text(
-                    "Let's start",
+                  const Text(
+                    'Calculation BMI',
                     style: TextStyle(
-                      color: Colors.white,
+                        fontSize: 25,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black),
+                  ),
+                  const SizedBox(height: 10),
+                  Container(
+                    width: 200,
+                    height: 45,
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const BMIPage(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        "Let's start",
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
                   ),
-                ),
+                ],
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
